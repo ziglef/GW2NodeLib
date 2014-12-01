@@ -1,25 +1,12 @@
 // Scroll down a bit to see public API
 
 var config = {
-	baseUrl: 'https://api.guildwars2.com/v1/',
+	baseUrl: 'https://api.guildwars2.com/v2/',
 	cacheTime: 1800,
 	cacheFile: null,
 	debug: true,
 	api : {
-		events: 'events.json',
-		eventNames: 'event_names.json',
-		mapNames: 'map_names.json',
-		worldNames: 'world_names.json',
-		wvwMatches: 'wvw/matches.json',
-		wvwMatchDetails: 'wvw/match_details.json',
-		wvwObjectiveNames: 'wvw/objective_names.json',
-		items: 'items.json',
-		itemDetails: 'item_details.json',
-		recipes: 'recipes.json',
-		recipeDetails: 'recipe_details.json',
-		guildDetails: 'guild_details.json',
-		build: 'build.json',
-		colors: 'colors.json',
+		prices: 'commerce/prices',
 	},
 };
 
@@ -78,16 +65,16 @@ var apiRequest = function(apiKey, options, callback, bypassCache) {
 		callback = options;
 		options = null;
 	}
-	if (typeof apiKey === 'undefined' || typeof callback === 'undefined' || (typeof options !== 'undefined' && typeof options !== 'object')) {
+	if (typeof apiKey === 'undefined' || typeof callback === 'undefined' || (typeof options !== 'undefined' && typeof options !== 'string')) {
 		throw new Gw2ApiLibException('Bad arguments for apiRequest. Make sure all arguments are valid. Arguments: ' + JSON.stringify(arguments));
 	}
 
 	// Time to update and recache
 	if (bypassCache || typeof cache.get(apiKey) === 'undefined' || (new Date()) > cache.get(apiKey).updateAt) {
-		var url = config.baseUrl + config.api[apiKey].uri + ((options !== null) ? '?' + querystring.stringify(options) : '');
+		var url = config.baseUrl + config.api[apiKey].uri + ((options !== null) ? options : '');
 
 		if (config.debug) console.log('Updating cache for API Key: ' + apiKey + ' from URL: ' + url);
-
+		
 		request(url, function (error, response, body) {
 			if (error || response.statusCode !== 200) {
 				var msg = ((typeof response !== 'undefined') ? '[Status Code ' + response.statusCode + '] ' : '')
@@ -183,7 +170,7 @@ module.exports = function() {
 		// Returns true if successful, false if bad arguments
 		ret[apiKey] = function(apiKey) {
 			return function(callback, params, bypassCache) {
-				if (typeof callback !== 'function' || (typeof params !== 'undefined' && typeof params !== 'object')) {
+				if (typeof callback !== 'function' || (typeof params !== 'undefined' && typeof params !== 'string')) {
 					return false;
 				}
 

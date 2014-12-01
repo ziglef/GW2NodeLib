@@ -1,12 +1,12 @@
 {
-	"name": "gw2nodelib",
-	"version": "0.0.2",
-	"author": "TimeBomb",
-	"description": "Guild Wars 2 JSON Api Library for Node.js",
+	"name": "gw2nodelibvz",
+	"version": "0.0.1",
+	"author": "Ziglef",
+	"description": "Guild Wars 2 JSON Api v2 Library for Node.js",
 	"main": "./api",
 	"repository": {
 		"type": "git",
-		"url": "git://github.com/TimeBomb/GW2NodeLib.git"
+		"url": "git://github.com/ziglef/GW2NodeLib"
 	},
 	"keywords": [
 		"guild wars 2",
@@ -18,7 +18,7 @@
 	},
 	"licenses": [{
       "type": "MIT",
-      "url": "https://github.com/TimeBomb/GW2NodeLib/blob/master/LICENSE"
+      "url": "https://github.com/ziglef/GW2NodeLib/blob/master/LICENSE"
     }],
 	"engines": {
 		"node": ">=0.10.7"
